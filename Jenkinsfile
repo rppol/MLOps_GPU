@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                cd /home/nvidiatest/mlops_blog
-                ls
+                echo "hello"
             }
         }
     }
