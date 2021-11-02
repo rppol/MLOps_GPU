@@ -10,6 +10,7 @@ split_data:
   valid_test_ratio: 0.2
 
 train:
+  save_model: False
   params:
     booster: "gbtree"
     eval_metric: "rmse"
