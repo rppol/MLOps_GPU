@@ -5,7 +5,7 @@ import pandas as pd
 import numba, socket
 import dask, dask_cudf
 from dask.delayed import delayed
-from load_data import load_data
+from load_data import load_train_data
 import math
 from math import cos, sin, asin, sqrt, pi
 
@@ -167,5 +167,5 @@ if __name__=="__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
-    df = load_data(config_path=parsed_args.config)
+    df = load_train_data(config_path=parsed_args.config)
     feature_engg(client, df)

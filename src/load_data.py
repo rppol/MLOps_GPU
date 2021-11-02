@@ -4,10 +4,16 @@ from dask_client import read_params, dask_client
 import cudf
 import dask, dask_cudf
 
-def load_data(config_path):
+def load_train_data(config_path):
     config = read_params(config_path)
     client = dask_client(config_path)
     df = dask_cudf.read_csv(os.path.join("data", "train.csv"))
+    return (client, df)
+
+def load_test_data(config_path):
+    config = read_params(config_path)
+    client = dask_client(config_path)
+    df = dask_cudf.read_csv(os.path.join("data", "test.csv"))
     return (client, df)
 
 if __name__=="__main__":
