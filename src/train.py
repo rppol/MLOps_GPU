@@ -5,10 +5,13 @@ from load_data import load_train_data
 from feature_engg import feature_engg
 from split_data import split_data
 import xgboost as xgb
+import mlflow
+import mlflow.xgboost
 
 def train(client, dtrain, dvalid, config_path):
     config = read_params(config_path)
     watchlist = [(dtrain, 'train'), (dvalid, 'valid')]
+    with mlflow.start_run():
     params = {
         'booster' : config["train"]["params"]["booster"],
         'eval_metric': config["train"]["params"]["eval_metric"],
@@ -29,9 +32,10 @@ def train(client, dtrain, dvalid, config_path):
                             early_stopping_rounds=early_stopping_rounds,
                             verbose_eval=verbose_eval)
 
-    model_path = "saved_models"
-    model['booster'].save_model(os.path.join(model_path, "xgboost.model"))
-    model['booster'].save_model(os.path.join(model_path, "xgboost.json"))
+    if config["train"]["save_model"]:
+        model_path = "saved_models"
+        model['booster'].save_model(os.path.join(model_path, "xgboost.model"))
+        model['booster'].save_model(os.path.join(model_path, "xgboost.json"))
     return model
 
 if __name__=="__main__":
