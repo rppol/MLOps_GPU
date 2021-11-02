@@ -3,9 +3,6 @@ base:
   random_state: 42
   target_col: "fare_amount"
 
-data_source:
-  s3_source: data_given/winequality.csv
-
 GPU_cluster:
   max_memory: "48"
 
