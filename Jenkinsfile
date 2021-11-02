@@ -4,7 +4,6 @@ pipeline {
         stage('build') {
             steps {
                 sh './scripts/setup.sh'
-                }
             }
         }
     }
