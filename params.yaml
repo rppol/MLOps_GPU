@@ -10,7 +10,7 @@ split_data:
   valid_test_ratio: 0.2
 
 train:
-  save_model: False
+  save_model: True
   params:
     booster: "gbtree"
     eval_metric: "rmse"
@@ -19,10 +19,16 @@ train:
     min_child_weight: 1
     colsample_bytree: 0.7
     learning_rate: 0.05
-  early_stopping_rounds: 10
-  num_boost_round: 100
-  verbose_eval: 10
+  early_stopping_rounds: 100
+  num_boost_round: 10000
+  verbose_eval: 100
 
 test:
   model_name: "xgboost"
   model_extension: ".model"
+
+triton:
+  ip: "13.92.226.55"
+  http_port: "8000"
+  grpc_port: "8001"
+  dtype: "float32"

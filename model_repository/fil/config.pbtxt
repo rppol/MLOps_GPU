@@ -1,6 +1,6 @@
 name: "fil"
 backend: "fil"
-max_batch_size: 8192
+max_batch_size: 16777216
 input [
  {
     name: "input__0"
