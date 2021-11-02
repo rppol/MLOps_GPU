@@ -12,10 +12,11 @@ def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
     mae = mean_absolute_error(actual, pred)
     r2 = r2_score(actual, pred)
-    return rmse, mae, r2
+    return (rmse, mae, r2)
 
 def test_and_evaluate(client, df, config_path):
     config = read_params(config_path)
+    client, df = feature_engg(client, df)
 
     #Load Model
     model = xgb.Booster()
@@ -34,12 +35,12 @@ def test_and_evaluate(client, df, config_path):
 
     #Evaluate Prediction
     actual = actual.compute().to_array()
-    print(eval_metrics(actual, pred))
+    rmse, mae, r2 = eval_metrics(actual, pred)
+    return (rmse, mae, r2)
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
     client, df = load_test_data(config_path=parsed_args.config)
-    client, df = feature_engg(client, df)
     test_and_evaluate(client, df, config_path=parsed_args.config)

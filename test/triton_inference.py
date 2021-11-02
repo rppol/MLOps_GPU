@@ -9,9 +9,10 @@ from dask.distributed import Client, wait, LocalCluster
 from dask.utils import parse_bytes
 import tritonclient.http as triton_http
 import tritonclient.grpc as triton_grpc
-
 import math
 from math import cos, sin, asin, sqrt, pi
+
+"""sudo docker run   --gpus=all   --rm   -p 8000:8000   -p 8001:8001   -p 8002:8002   -v /home/nvidiatest/mlops_blog/model_repository:/models   triton_fil   tritonserver   --model-repository=/models"""
 
 def jfk_distance(dropoff_latitude, dropoff_longitude, jfk_distance):
     for i, (x_1, y_1) in enumerate(zip(dropoff_latitude, dropoff_longitude)):

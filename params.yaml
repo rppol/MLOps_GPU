@@ -18,14 +18,22 @@ train:
     objective: "reg:squarederror"
     min_child_weight: 1
     colsample_bytree: 0.7
-    learning_rate: 0.05
+    learning_rate: 0.1
   early_stopping_rounds: 100
-  num_boost_round: 10000
+  num_boost_round: 1000
   verbose_eval: 100
 
 test:
   model_name: "xgboost"
   model_extension: ".model"
+
+mlflow:
+  artifacts_dir: rtifacts
+  experiment_name: xgboost_regression_gpu
+  run_name: mlops
+  registered_model_name: xgboost_nyc_taxi_fare_prediction
+  remote_server_uri: http://13.92.226.55:8003
+
 
 triton:
   ip: "13.92.226.55"

@@ -11,7 +11,6 @@ import mlflow.xgboost
 def train(client, dtrain, dvalid, config_path):
     config = read_params(config_path)
     watchlist = [(dtrain, 'train'), (dvalid, 'valid')]
-    with mlflow.start_run():
     params = {
         'booster' : config["train"]["params"]["booster"],
         'eval_metric': config["train"]["params"]["eval_metric"],
