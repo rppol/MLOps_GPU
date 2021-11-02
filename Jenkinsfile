@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "hello"
-                pwd
+                ./scripts/setup.sh
+                }
             }
         }
     }
