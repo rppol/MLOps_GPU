@@ -1,10 +1,10 @@
 pipeline {
     agent any
-    
-    stage("deploy") {
-        steps {
-            script {
-                echo "init"
+    stages {
+        stage('build') {
+            steps {
+                cd /home/nvidiatest/mlops_blog
+                ls
             }
         }
     }
