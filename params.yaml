@@ -1,0 +1,26 @@
+base:
+  project: mlops
+  random_state: 42
+  target_col: fare_amount
+
+data_source:
+  s3_source: data_given/winequality.csv
+
+GPU_cluster:
+  max_memory: "48"
+
+split_data:
+  valid_test_ratio: 0.2
+
+train:
+  params:
+    booster: "gbtree"
+    eval_metric: "rmse"
+    tree_method: "gpu_hist"
+    objective: "reg:squarederror"
+    min_child_weight: 1
+    colsample_bytree: 0.7
+    learning_rate: 0.05
+  early_stopping_rounds: 10
+  num_boost_round: 500
+  verbose_eval: 50
