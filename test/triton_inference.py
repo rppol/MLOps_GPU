@@ -213,6 +213,8 @@ def triton_inference(config_path):
     # Check that we got the same result with both GRPC and HTTP
     np.testing.assert_almost_equal(result_http, result_grpc)
 
+    print(result_grpc)
+
 if __name__=="__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", default="params.yaml")
