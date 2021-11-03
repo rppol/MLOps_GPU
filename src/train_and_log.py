@@ -19,7 +19,7 @@ def train(client, dtrain, dvalid, config_path):
     mlflow.set_tracking_uri(remote_server_uri)
     mlflow.set_experiment(config["mlflow"]["experiment_name"])
 
-    with mlflow.start_run():
+    with mlflow.start_run(run_name=config["mlflow"]["run_name"]):
         params = {
             'booster' : config["train"]["params"]["booster"],
             'eval_metric': config["train"]["params"]["eval_metric"],
