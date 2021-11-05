@@ -36,6 +36,7 @@ def test_and_evaluate(client, df, config_path):
     #Evaluate Prediction
     actual = actual.compute().to_array()
     rmse, mae, r2 = eval_metrics(actual, pred)
+    print(rmse, mae, r2)
     return (rmse, mae, r2)
 
 if __name__=="__main__":
