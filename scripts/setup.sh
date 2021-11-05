@@ -1,5 +1,2 @@
 #!/bin/bash
-source /home/jenkins/miniconda3/etc/profile.d/conda.sh
-cd /home/nvidiatest/mlops_blog
-conda activate mlops
-python src/train.py
+conda create -n mlops -c rapidsai -c nvidia -c conda-forge rapids=21.10 python=3.8 cudatoolkit=11.2
