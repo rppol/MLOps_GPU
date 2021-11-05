@@ -22,7 +22,7 @@ def test_and_evaluate(client, df, config_path):
     model = xgb.Booster()
     model_name = config["test"]["model_name"]
     model_extension = config["test"]["model_extension"]
-    model.load_model(os.path.join("saved_models", model_name+model_extension))
+    model.load_model(os.path.join("/home/nvidiatest/mlops_blog/saved_models", model_name+model_extension))
 
     #Drop True value
     actual = df[config["base"]["target_col"]]
@@ -40,7 +40,7 @@ def test_and_evaluate(client, df, config_path):
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()
-    args.add_argument("--config", default="params.yaml")
+    args.add_argument("--config", default="/home/nvidiatest/mlops_blog/params.yaml")
     parsed_args = args.parse_args()
     client, df = load_test_data(config_path=parsed_args.config)
     test_and_evaluate(client, df, config_path=parsed_args.config)
