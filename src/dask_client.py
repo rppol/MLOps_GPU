@@ -1,9 +1,8 @@
-import os
 import yaml
 import argparse
 import dask
 from dask_cuda import LocalCUDACluster
-from dask.distributed import Client, wait, LocalCluster
+from dask.distributed import Client
 from dask.utils import parse_bytes
 
 def read_params(config_path):
