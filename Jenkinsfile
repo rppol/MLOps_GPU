@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('Train') {
             steps {
-                sh './scripts/setup.sh'
+                sh './scripts/train.sh'
             }
         }
     }

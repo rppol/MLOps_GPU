@@ -1,8 +1,8 @@
-import os
+import sys
+sys.path.append('test/')
+
 import argparse
 import xgboost as xgb
-import xgboost as xgb
-import numpy as np
 import mlflow
 import mlflow.xgboost
 from read_params import read_params

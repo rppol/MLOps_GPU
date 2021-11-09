@@ -1,5 +1,9 @@
+import sys
+sys.path.append('src/')
+
 import os
 import argparse
+
 import numpy as np
 import xgboost as xgb
 from read_params import read_params

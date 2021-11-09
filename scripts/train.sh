@@ -1,7 +1,5 @@
 #!/bin/bash
 source ~/.bashrc
 conda activate mlops
-pwd
-ls -a
-cd data
-ls -a
+
+python src/train_with_tracking.py
