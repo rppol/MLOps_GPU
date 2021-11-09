@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Train') {
             steps {
-                sh chmod +x /scripts/train.sh
+                chmod +x /scripts/train.sh
             }
         }
     }
