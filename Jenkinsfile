@@ -1,10 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Train'){
+        stage('Build Model'){
             steps {
-                sh 'chmod +x scripts/train.sh'
-                sh './scripts/train.sh'
+                sh 'chmod +x scripts/build.sh'
+                sh './scripts/build.sh'
             }
         }
     }
