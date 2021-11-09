@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Train') {
+        stage('Train'){
             steps {
-                sh './scripts/train.sh'
+                sudo chmod +x /scripts/train.sh
             }
         }
     }
