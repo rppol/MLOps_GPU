@@ -3,5 +3,5 @@ source ~/.bashrc
 conda activate mlops
 pwd
 ls -a
-cd notebooks
+cd data
 ls -a
