@@ -4,4 +4,4 @@ conda activate mlops
 pwd
 ls -a
 cd notebooks
-ls-a
+ls -a
