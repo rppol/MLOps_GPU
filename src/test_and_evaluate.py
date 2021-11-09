@@ -1,47 +1,53 @@
 import os
 import argparse
-from dask_client import read_params
-from load_data import load_test_data
-from feature_engg import feature_engg
 import numpy as np
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import xgboost as xgb
+from read_params import read_params
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+from dask_client import dask_client
+from load_data import load_data
+from feature_engg import feature_engg
 
 def eval_metrics(actual, pred):
-    from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
     rmse = np.sqrt(mean_squared_error(actual, pred))
     mae = mean_absolute_error(actual, pred)
     r2 = r2_score(actual, pred)
     return (rmse, mae, r2)
 
-def test_and_evaluate(client, df, config_path):
+def test_and_evaluate(client, dtest, config_path, model=None):
     config = read_params(config_path)
-    client, df = feature_engg(client, df)
 
     #Load Model
-    model = xgb.Booster()
-    model_name = config["test"]["model_name"]
-    model_extension = config["test"]["model_extension"]
-    model.load_model(os.path.join("/home/nvidiatest/mlops_blog/saved_models", model_name+model_extension))
+    if model == None:
+        model = xgb.Booster()
+        saved_model_dir = config["test"]["saved_model_dir"]
+        model_name = config["test"]["model_name"]
+        model_extension = config["test"]["model_extension"]
+        model.load_model(os.path.join(saved_model_dir, model_name+model_extension))
 
-    #Drop True value
-    actual = df[config["base"]["target_col"]]
-    df = df.drop([config["base"]["target_col"]], axis=1)
+    #Drop Actual value
+    actual = dtest[config["base"]["target_col"]].compute().to_array()
+    dtest = dtest.drop([config["base"]["target_col"]], axis=1)
 
     #Make Prediction
-    dtest = xgb.dask.DaskDMatrix(client, df)
-    prediction = xgb.dask.predict(client, model, dtest)
-    pred = prediction.compute()
+    dtest = xgb.dask.DaskDMatrix(client, dtest)
+    pred = xgb.dask.predict(client, model, dtest).compute()
 
     #Evaluate Prediction
-    actual = actual.compute().to_array()
     rmse, mae, r2 = eval_metrics(actual, pred)
-    print(rmse, mae, r2)
+    print("Root Mean Squared Error : ", rmse)
+    print("Mean Absolute Error : ", mae)
+    print("R-squared Score : ", r2)
     return (rmse, mae, r2)
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()
-    args.add_argument("--config", default="/home/nvidiatest/mlops_blog/params.yaml")
+    args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
-    client, df = load_test_data(config_path=parsed_args.config)
-    test_and_evaluate(client, df, config_path=parsed_args.config)
+
+    client = dask_client(config_path=parsed_args.config)
+    df = load_data(config_path=parsed_args.config, test=True)
+    df = feature_engg(df)
+    _1, _2, _3 = test_and_evaluate(client, df, config_path=parsed_args.config)
+    client.close()

@@ -1,13 +1,10 @@
-import os
 import argparse
 import numpy as np
-import pandas as pd
-import numba, socket
 import dask, dask_cudf
-from dask.delayed import delayed
-from load_data import load_train_data
-import math
 from math import cos, sin, asin, sqrt, pi
+
+from dask_client import dask_client
+from load_data import load_data
 
 def jfk_distance(dropoff_latitude, dropoff_longitude, jfk_distance):
     for i, (x_1, y_1) in enumerate(zip(dropoff_latitude, dropoff_longitude)):
@@ -156,16 +153,19 @@ def feature_addition(df):
     df = df.drop(['pickup_datetime','key'], axis=1)
     return df
 
-def feature_engg(client, df):
+def feature_engg(df):
     df = dtype_conversion(df)
     df = filter_outliers_missing_vals(df)
     parts = [dask.delayed(feature_addition)(part) for part in df.to_delayed()]
     df = dask_cudf.from_delayed(parts)
-    return (client, df)
+    return df
     
 if __name__=="__main__":
     args = argparse.ArgumentParser()
-    args.add_argument("--config", default="/home/nvidiatest/mlops_blog/params.yaml")
+    args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
-    df = load_train_data(config_path=parsed_args.config)
-    feature_engg(client, df)
+
+    client = dask_client(config_path=parsed_args.config)
+    df = load_data(config_path=parsed_args.config)
+    _ = feature_engg(df)
+    client.close()

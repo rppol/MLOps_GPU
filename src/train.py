@@ -1,15 +1,17 @@
 import os
 import argparse
-from dask_client import read_params
-from load_data import load_train_data
+import xgboost as xgb
+from read_params import read_params
+
+from dask_client import dask_client
+from load_data import load_data
 from feature_engg import feature_engg
 from split_data import split_data
-import xgboost as xgb
-import mlflow
-import mlflow.xgboost
+from generate_Dmatrix import generate_Dmatrix
 
 def train(client, dtrain, dvalid, config_path):
     config = read_params(config_path)
+
     watchlist = [(dtrain, 'train'), (dvalid, 'valid')]
     params = {
         'booster' : config["train"]["params"]["booster"],
@@ -20,7 +22,6 @@ def train(client, dtrain, dvalid, config_path):
         'colsample_bytree': config["train"]["params"]["colsample_bytree"],
         'learning_rate': config["train"]["params"]["learning_rate"],
     }
-
     num_boost_round = config["train"]["num_boost_round"]
     early_stopping_rounds = config["train"]["early_stopping_rounds"]
     verbose_eval = config["train"]["verbose_eval"]
@@ -41,7 +42,11 @@ if __name__=="__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
-    client, df = load_train_data(config_path=parsed_args.config)
-    client, df = feature_engg(client, df)
-    client, dtrain, dvalid = split_data(client, df,config_path=parsed_args.config)
-    train(client, dtrain, dvalid, config_path=parsed_args.config)
+
+    client = dask_client(config_path=parsed_args.config)
+    df = load_data(config_path=parsed_args.config)
+    df = feature_engg(df)
+    X_train, X_test, y_train, y_test = split_data(df, config_path=parsed_args.config)
+    dtrain, dvalid = generate_Dmatrix(client, X_train, X_test, y_train, y_test)
+    _ = train(client, dtrain, dvalid, config_path=parsed_args.config)
+    client.close()
