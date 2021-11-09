@@ -25,7 +25,7 @@ train:
     colsample_bytree: 0.7
     learning_rate: 0.05
   early_stopping_rounds: 100
-  num_boost_round: 200
+  num_boost_round: 300
   verbose_eval: 100
 
 test:
