@@ -19,6 +19,7 @@ train:
     min_child_weight: 1
     colsample_bytree: 0.7
     learning_rate: 0.05
+    max_depth: 11
   early_stopping_rounds: 100
   num_boost_round: 10000
   verbose_eval: 100

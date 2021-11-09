@@ -28,6 +28,7 @@ def train(client, dtrain, dvalid, config_path):
             'min_child_weight': config["train"]["params"]["min_child_weight"],
             'colsample_bytree': config["train"]["params"]["colsample_bytree"],
             'learning_rate': config["train"]["params"]["learning_rate"],
+            'max_depth': config["train"]["params"]["max_depth"]
         }
 
         num_boost_round = config["train"]["num_boost_round"]

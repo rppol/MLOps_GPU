@@ -20,4 +20,4 @@ if __name__=="__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config", default="/home/nvidiatest/mlops_blog/params.yaml")
     parsed_args = args.parse_args()
-    load_data(config_path=parsed_args.config)
+    load_train_data(config_path=parsed_args.config)
