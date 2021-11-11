@@ -5,6 +5,7 @@ from dask_cuda import LocalCUDACluster
 from dask.distributed import Client
 from dask.utils import parse_bytes
 
+
 def dask_client(config_path):
     config = read_params(config_path)
     max_memory = config["GPU_cluster"]["max_memory"]
