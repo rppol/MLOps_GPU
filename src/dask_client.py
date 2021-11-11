@@ -21,3 +21,4 @@ if __name__=="__main__":
 
     client = dask_client(config_path=parsed_args.config)
     client.close()
+    
