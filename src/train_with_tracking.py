@@ -1,6 +1,7 @@
 import sys
 sys.path.append('test/')
 
+import os
 import argparse
 import xgboost as xgb
 import mlflow
@@ -46,6 +47,11 @@ def train_with_tracking(client, dtrain, dvalid, dtest, config_path):
                                 evals=watchlist,
                                 early_stopping_rounds=early_stopping_rounds,
                                 verbose_eval=verbose_eval)
+
+        if config["train"]["save_model"]:
+            model_path = "saved_models"
+            model['booster'].save_model(os.path.join(model_path, "xgboost.model"))
+            model['booster'].save_model(os.path.join(model_path, "xgboost.json"))    
 
         rmse, mae, r2 = test_and_evaluate(client, dtest, config_path, model)
 
