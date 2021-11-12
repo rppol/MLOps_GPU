@@ -17,7 +17,7 @@ def log_production_model(config_path):
     
     runs = mlflow.search_runs(experiment_ids=2, order_by=["metrics.rmse"])
     print(runs)
-    lowest = runs["metrics.rmse"].sort_values(ascending=True)[0]
+    lowest = runs["metrics.rmse"][0]
     print(lowest)
     lowest_run_id = runs[runs["metrics.rmse"] == lowest]["run_id"][0]
     
@@ -43,7 +43,8 @@ def log_production_model(config_path):
             )        
 
     loaded_model = mlflow.pyfunc.load_model(logged_model)
-    print(loaded_model)
+    print("Loaded Model is : ", loaded_model)
+    print("Type : ", type(loaded_model))
     
     #model_path = config["webapp_model_dir"] #"prediction_service/model"
 
