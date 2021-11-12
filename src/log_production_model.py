@@ -48,8 +48,7 @@ def log_production_model(config_path):
         model_path = "saved_models"
         model.save_model(os.path.join(model_path, "xgboost.model"))
         model.save_model(os.path.join(model_path, "xgboost.json"))
-    
-    model_path = "../saved_models"
+
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
