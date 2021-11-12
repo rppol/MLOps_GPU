@@ -46,7 +46,7 @@ def log_production_model(config_path):
     print("Loaded Model is : ", loaded_model)
     print("Type : ", type(loaded_model))
     
-    model_path = "saved_models"
+    model_path = "../saved_models"
 
     joblib.dump(loaded_model, model_path)
 
