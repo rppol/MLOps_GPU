@@ -42,13 +42,11 @@ def log_production_model(config_path):
                 stage="Staging"
             )        
 
-    loaded_model = mlflow.pyfunc.load_model(logged_model)
+    loaded_model = mlflow.xgboost.load_model(logged_model)
     print("Loaded Model is : ", loaded_model)
     print("Type : ", type(loaded_model))
     
     model_path = "../saved_models"
-
-    joblib.dump(loaded_model, model_path)
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
