@@ -42,9 +42,12 @@ def log_production_model(config_path):
                 stage="Staging"
             )        
 
-    loaded_model = mlflow.xgboost.load_model(logged_model)
-    print("Loaded Model is : ", loaded_model)
-    print("Type : ", type(loaded_model))
+    model = mlflow.xgboost.load_model(logged_model)
+
+    if config["train"]["save_model"]:
+        model_path = "saved_models"
+        model.save_model(os.path.join(model_path, "xgboost.model"))
+        model.save_model(os.path.join(model_path, "xgboost.json"))
     
     model_path = "../saved_models"
 
