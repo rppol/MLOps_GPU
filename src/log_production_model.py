@@ -45,7 +45,7 @@ def log_production_model(config_path):
     model = mlflow.xgboost.load_model(logged_model)
 
     if config["train"]["save_model"]:
-        model_path = "saved_models"
+        model_path = "production_model"
         model.save_model(os.path.join(model_path, "xgboost.model"))
         model.save_model(os.path.join(model_path, "xgboost.json"))
 
