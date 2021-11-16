@@ -22,10 +22,10 @@ train:
     tree_method: "gpu_hist"
     objective: "reg:squarederror"
     min_child_weight: 1
-    colsample_bytree: 0.8
+    colsample_bytree: 0.7
     learning_rate: 0.01
   early_stopping_rounds: 100
-  num_boost_round: 1
+  num_boost_round: 1000
   verbose_eval: 100
 
 test:

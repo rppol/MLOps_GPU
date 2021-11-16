@@ -7,15 +7,16 @@ pipeline {
                 sh './scripts/train_test_log.sh'
             }
         }
-        stage('Get Best Model'){
+        stage('Productionize'){
             steps {
-                sh 'chmod 777 scripts/get_best_model.sh'
-                sh './scripts/get_best_model.sh'
+                sh 'chmod 777 scripts/Productionize.sh'
+                sh './scripts/Productionize.sh'
             }
         }
-        stage('Deploy'){
+        stage('Test Server'){
             steps {
-                
+                sh 'chmod 777 scripts/triton_test.sh'
+                sh './scripts/triton_test.sh'
             }
         }
     }
