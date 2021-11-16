@@ -11,14 +11,15 @@ from test_and_evaluate import eval_metrics
 
 import tritonclient.grpc as triton_grpc
 
-"""sudo docker run   --gpus=all   --rm   -p 8000:8000   -p 8001:8001   -p 8002:8002  -v /var/lib/jenkins/workspace:/models   triton_fil   tritonserver   --model-repository=/models --model-control-mode=poll --repository-poll-secs=10"""
+"""sudo docker run   --gpus=all   --rm   -p 8000:8000   -p 8001:8001   -p 8002:8002  -v /var/lib/jenkins/workspace/model_repository:/models   triton_fil   tritonserver   --model-repository=/models --model-control-mode=poll --repository-poll-secs=10"""
 
 def triton_inference(df, config_path):
     config = read_params(config_path)
 
+    df = df.astype(config["triton"]["dtype"])
+    df = df.sample(frac=0.01)
     actual = df[config["base"]["target_col"]].compute().to_array()
     df = df.drop([config["base"]["target_col"]], axis=1)
-    df = df.astype(config["triton"]["dtype"])
     df = df.compute().to_pandas().values
 
     grpc_client = triton_grpc.InferenceServerClient(
