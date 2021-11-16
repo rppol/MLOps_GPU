@@ -3,7 +3,6 @@ import argparse
 import mlflow
 from mlflow.tracking import MlflowClient
 from pprint import pprint
-import joblib
 import os
 
 def log_production_model(config_path):

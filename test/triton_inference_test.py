@@ -26,7 +26,7 @@ def triton_inference(df, config_path):
         verbose = False
     )
 
-    # Set up Triton input and output objects for both HTTP and GRPC
+    # Set up Triton input and output objects for GRPC
     triton_input_grpc = triton_grpc.InferInput(
         'input__0',
         (df.shape[0], df.shape[1]),
@@ -60,3 +60,4 @@ if __name__=="__main__":
     df = load_data(config_path=parsed_args.config, test = True)
     df = feature_engg(df)
     triton_inference(df, config_path=parsed_args.config)
+    client.close()
