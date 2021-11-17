@@ -7,7 +7,6 @@ from read_params import read_params
 from dask_client import dask_client
 from load_data import load_data
 from feature_engg import feature_engg
-from test_and_evaluate import eval_metrics
 
 import tritonclient.grpc as triton_grpc
 
@@ -18,7 +17,6 @@ def triton_inference(df, config_path):
 
     df = df.astype(config["triton"]["dtype"])
     df = df.sample(frac=0.01)
-    actual = df[config["base"]["target_col"]].compute().to_array()
     df = df.drop([config["base"]["target_col"]], axis=1)
     df = df.compute().to_pandas().values
 
@@ -44,13 +42,8 @@ def triton_inference(df, config_path):
     )
 
     # Get results as numpy arrays
-    pred = request_grpc.as_numpy('output__0')
-
-    rmse, mae, r2 = eval_metrics(actual, pred)
-    print("Root Mean Squared Error : ", rmse)
-    print("Mean Absolute Error : ", mae)
-    print("R-squared Score : ", r2)
-    return (rmse, mae, r2)
+    predictions = request_grpc.as_numpy('output__0')
+    return predictions
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()

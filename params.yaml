@@ -21,11 +21,11 @@ train:
     eval_metric: "rmse"
     tree_method: "gpu_hist"
     objective: "reg:squarederror"
-    min_child_weight: 1
-    colsample_bytree: 0.7
+    min_child_weight: 0.5
+    colsample_bytree: 0.9
     learning_rate: 0.05
   early_stopping_rounds: 100
-  num_boost_round: 100
+  num_boost_round: 10000
   verbose_eval: 100
 
 test:
