@@ -25,7 +25,7 @@ def test_and_evaluate(client, dtest, config_path, model=None):
     #Load Model
     if model == None:
         model = xgb.Booster()
-        saved_model_dir = config["test"]["saved_model_dir"]
+        saved_model_dir = 'production_model'
         model_name = config["test"]["model_name"]
         model_extension = config["test"]["model_extension"]
         model.load_model(os.path.join(saved_model_dir, model_name+model_extension))
