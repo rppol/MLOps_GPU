@@ -1,6 +1,7 @@
 import sys
 sys.path.append('src/')
 import argparse
+from requests import get
 
 from read_params import read_params
 
@@ -10,8 +11,6 @@ from feature_engg import feature_engg
 
 import tritonclient.grpc as triton_grpc
 
-"""sudo docker run   --gpus=all   --rm   -p 8000:8000   -p 8001:8001   -p 8002:8002  -v /var/lib/jenkins/workspace/model_repository:/models   triton_fil   tritonserver   --model-repository=/models --model-control-mode=poll --repository-poll-secs=10"""
-
 def triton_inference(df, config_path):
     config = read_params(config_path)
 
@@ -20,8 +19,10 @@ def triton_inference(df, config_path):
     df = df.drop([config["base"]["target_col"]], axis=1)
     df = df.compute().to_pandas().values
 
+    ip = get('https://api.ipify.org').content.decode('utf8')
+
     grpc_client = triton_grpc.InferenceServerClient(
-        url=config["triton"]["ip"] + ':' + config["triton"]["grpc_port"],
+        url = ip + ':' + config["triton"]["grpc_port"],
         verbose = False
     )
 
@@ -43,6 +44,7 @@ def triton_inference(df, config_path):
 
     # Get results as numpy arrays
     predictions = request_grpc.as_numpy('output__0')
+    print("Triton is Working!")
     return predictions
 
 if __name__=="__main__":
