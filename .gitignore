@@ -3,3 +3,4 @@ notebooks/.ipynb_checkpoints
 src/__pycache__
 data
 dask-worker-space
+.vscode
