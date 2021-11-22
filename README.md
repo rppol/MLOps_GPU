@@ -1,4 +1,5 @@
-# Accelerating MLOps with the power of GPUs!
+![GitHub](https://img.shields.io/github/license/rppol/MLOps_GPU)
+# Accelerating MLOps with the power of GPUs
 
 ## Code Structure
 
