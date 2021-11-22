@@ -3,7 +3,7 @@
 
 # Accelerating MLOps with the power of GPUs
 
-Blog Link : 
+Blog Link :  
 
 ## Code Structure
 
