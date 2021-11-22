@@ -6,7 +6,7 @@
 
 # Accelerating MLOps with the power of GPUs
 
-Blog Link :  
+Blog Link :  https://rppol.medium.com/accelerating-mlops-with-the-power-of-gpus-f28be3ff56e1
 
 ## Code Structure
 
