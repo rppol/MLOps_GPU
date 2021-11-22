@@ -1,5 +1,6 @@
 ![GitHub](https://img.shields.io/github/license/rppol/MLOps_GPU)
 [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
+![Python](https://upload.wikimedia.org/wikipedia/commons/a/a5/Blue_Python_3.8_Shield_Badge.svg)
 
 # Accelerating MLOps with the power of GPUs
 
