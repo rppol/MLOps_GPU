@@ -8,6 +8,8 @@
 
 Blog Link :  https://rppol.medium.com/accelerating-mlops-with-the-power-of-gpus-f28be3ff56e1
 
+![alt text](https://miro.medium.com/max/1400/1*kbvZavSQCYjhr8kBH8Dj5g.png)
+
 ## Code Structure
 
  1.  [notebooks](https://github.com/rppol/MLOps_GPU/tree/main/notebooks)  : These notebooks will not be deployed, as they are for performance benchmarking & experimentation.
